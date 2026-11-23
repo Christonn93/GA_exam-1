@@ -79,12 +79,12 @@ Sjekklisten organiserer eksamenskravene i arbeidsrekkefølge, fra planlegging ti
 - [x] Knytt hvert kurs til én eier.
 - [x] Knytt hver påmelding til ett kurs.
 - [x] Knytt hver påmelding til én deltaker.
-- [ ] Konfigurer datatyper, feltlengder og nullable-felter i samsvar med diagrammet.
+- [x] Konfigurer datatyper, feltlengder og nullable-felter i samsvar med diagrammet.
 - [ ] Implementer en løsning som hindrer flere aktive påmeldinger for samme deltaker på samme kurs.
 - [ ] Planlegg hvordan samtidige påmeldinger skal håndteres uten oversalg.
 - [ ] Planlegg hvordan avbestilling, kursoppdatering og sletting skal bevare dataintegriteten.
 - [ ] Bruk asynkrone databaseoperasjoner.
-- [ ] Opprett migreringer eller nødvendige databaseoppsettsfiler.
+- [x] Opprett migreringer eller nødvendige databaseoppsettsfiler.
 - [ ] Kontroller at databasen kan opprettes fra dokumenterte instruksjoner.
 
 ## 4. Lag felles API-kontrakter og feilhåndtering

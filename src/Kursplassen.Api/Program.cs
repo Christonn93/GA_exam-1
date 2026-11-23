@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Register application and API-level services
 builder.Services
-    .AddApplicationServices()
+    .AddApplicationServices(builder.Configuration)
     .AddApiServices()
     
     // Resource: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/?view=aspnetcore-11.0
