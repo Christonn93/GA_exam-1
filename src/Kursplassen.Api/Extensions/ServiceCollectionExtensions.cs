@@ -1,5 +1,7 @@
 using Kursplassen.Api.Endpoints;
+using Kursplassen.Core.Interfaces;
 using Kursplassen.Infrastructure.Data;
+using Kursplassen.Infrastructure.Repositories;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -23,6 +25,11 @@ public static class ServiceCollectionExtensions
             options.UseMySql(
                 configuration.GetConnectionString("Kursplassen"),
                 new MySqlServerVersion(new Version(8, 0))));
+
+        // Register data-access repositories
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<ICourseRepository, CourseRepository>();
+        services.AddScoped<IRegistrationRepository, RegistrationRepository>();
 
         return services;
     }
