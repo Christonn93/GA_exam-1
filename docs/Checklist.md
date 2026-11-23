@@ -89,14 +89,14 @@ Sjekklisten organiserer eksamenskravene i arbeidsrekkefølge, fra planlegging ti
 
 ## 4. Lag felles API-kontrakter og feilhåndtering
 
-- [ ] Definer request-DTO-er for registrering, innlogging og kursoppretting/-oppdatering.
+- [x] Definer request-DTO-er for registrering, innlogging og kursoppretting/-oppdatering.
 - [ ] Definer response-DTO-er for autentisering, kurs og påmeldinger.
-- [ ] Sørg for at databaseentiteter ikke brukes som API-kontrakter.
-- [ ] Definer konsistente feilresponser.
-- [ ] Implementer global feilhåndtering.
-- [ ] Sørg for at feilresponser ikke inneholder stack trace eller intern informasjon.
-- [ ] Implementer validering av innkommende data.
-- [ ] Kontroller at ugyldige felt gir forståelige feilmeldinger.
+- [x] Sørg for at databaseentiteter ikke brukes som API-kontrakter.
+- [x] Definer konsistente feilresponser.
+- [x] Implementer global feilhåndtering.
+- [x] Sørg for at feilresponser ikke inneholder stack trace eller intern informasjon.
+- [x] Implementer validering av innkommende data.
+- [x] Kontroller at ugyldige felt gir forståelige feilmeldinger.
 
 ## 5. Implementer registrering og innlogging
 
@@ -138,12 +138,12 @@ Sjekklisten organiserer eksamenskravene i arbeidsrekkefølge, fra planlegging ti
 
 ### Validering av kursdata
 
-- [ ] Tittel kan ikke være tom.
-- [ ] Sted kan ikke være tomt.
-- [ ] Sluttid må være etter starttid.
-- [ ] Kapasitet må være minst én.
-- [ ] Kurs inneholder beskrivelse, starttid, sluttid, sted og kapasitet.
-- [ ] Feltlengder samsvarer med datamodellen.
+- [x] Tittel kan ikke være tom.
+- [x] Sted kan ikke være tomt.
+- [x] Sluttid må være etter starttid.
+- [x] Kapasitet må være minst én.
+- [x] Kurs inneholder beskrivelse, starttid, sluttid, sted og kapasitet.
+- [x] Feltlengder samsvarer med datamodellen.
 
 ## 7. Implementer instruktørfunksjoner og eierskap
 

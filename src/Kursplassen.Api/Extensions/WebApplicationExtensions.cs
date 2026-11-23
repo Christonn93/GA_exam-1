@@ -8,6 +8,14 @@ public static class WebApplicationExtensions
     public static WebApplication UseApiPipeline(
         this WebApplication app)
     {
+        // Log every request first — outermost in the app pipeline, so it always
+        // records the final status code (including after exception handling).
+        app.UseMiddleware<RequestLoggingMiddleware>();
+
+        // Convert unhandled exceptions to ProblemDetails. Placed inside the
+        // request logger so the logger observes the rewritten status code.
+        app.UseMiddleware<ExceptionHandlingMiddleware>();
+
         // Expose the OpenAPI document and both documentation UIs
         // only during development.
         if (app.Environment.IsDevelopment())
@@ -28,9 +36,6 @@ public static class WebApplicationExtensions
             // Alternative modern API reference UI (Scalar)
             app.MapScalarApiReference();
         }
-
-        // Log every request.
-        app.UseMiddleware<RequestLoggingMiddleware>();
 
         // Enforce authorization for downstream endpoints.
         app.UseAuthorization();

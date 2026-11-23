@@ -1,4 +1,5 @@
 using System.Diagnostics;
+
 namespace Kursplassen.Api.Middleware;
 
 public sealed class RequestLoggingMiddleware
@@ -14,7 +15,10 @@ public sealed class RequestLoggingMiddleware
         "/favicon.ico"
     };
 
+    // Next middleware in the pipeline
     private readonly RequestDelegate _next;
+
+    // Logger scoped to this middleware's category
     private readonly ILogger<RequestLoggingMiddleware> _logger;
 
     public RequestLoggingMiddleware(
@@ -36,12 +40,16 @@ public sealed class RequestLoggingMiddleware
 
         // Resolve or generate a correlation ID for this request
         var requestId = GetOrCreateRequestId(context);
+
+        // Start the timer before invoking the rest of the pipeline
+        // so the measured duration covers all downstream work
         var stopwatch = Stopwatch.StartNew();
 
         try
         {
             await _next(context);
 
+            // Stop before logging so the duration excludes logging overhead
             stopwatch.Stop();
 
             // Log successful/short-circuited requests
@@ -53,9 +61,11 @@ public sealed class RequestLoggingMiddleware
         }
         catch (Exception exception)
         {
+            // Stop the timer as soon as the failure is caught
             stopwatch.Stop();
 
             // Log the failure, then rethrow to preserve pipeline behavior
+            // (the exception-handling middleware above still sees it)
             LogRequest(
                 context,
                 requestId,
@@ -71,6 +81,7 @@ public sealed class RequestLoggingMiddleware
         var path = context.Request.Path.Value ?? string.Empty;
 
         // Match against ignored prefixes (e.g. /swagger, /openapi)
+        // Using StartsWith so sub-paths like /swagger/index.html are skipped too
         return IgnoredPaths.Any(ignoredPath =>
             path.StartsWith(ignoredPath, StringComparison.OrdinalIgnoreCase));
     }
@@ -89,6 +100,8 @@ public sealed class RequestLoggingMiddleware
         // Otherwise generate a new ID and echo it back in the response
         var requestId = Guid.NewGuid().ToString("N");
 
+        // OnStarting fires just before headers are sent, which is the
+        // earliest point we can safely add a response header
         context.Response.OnStarting(() =>
         {
             context.Response.Headers[RequestIdHeaderName] = requestId;
@@ -104,10 +117,12 @@ public sealed class RequestLoggingMiddleware
         long elapsedMilliseconds,
         Exception? exception)
     {
+        // Snapshot request/response values once for consistent logging
         var method = context.Request.Method;
         var path = context.Request.Path.Value ?? string.Empty;
         var queryString = context.Request.QueryString.Value ?? string.Empty;
         var statusCode = context.Response.StatusCode;
+
         // Fall back to "anonymous" when no authenticated identity is present
         var user = context.User.Identity?.IsAuthenticated == true
             ? context.User.Identity.Name

@@ -1,10 +1,13 @@
 using Kursplassen.Api.Authentication;
 using Kursplassen.Api.Endpoints;
+using Kursplassen.Api.Validation;
 using Kursplassen.Core.Interfaces;
 using Kursplassen.Core.Services;
+using Kursplassen.Core.Validation;
 using Kursplassen.Infrastructure.Data;
 using Kursplassen.Infrastructure.Repositories;
 
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Pomelo.EntityFrameworkCore.MySql;
@@ -57,6 +60,12 @@ public static class ServiceCollectionExtensions
 
         // Register OpenAPI document generation (served in development)
         services.AddOpenApi();
+
+        // Register FluentValidation validators (from Core assembly)
+        services.AddValidatorsFromAssemblyContaining<RegisterRequestValidator>();
+
+        // Register the endpoint validation filter
+        services.AddTransient<ValidationFilter>();
 
         return services;
     }
