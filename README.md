@@ -11,7 +11,11 @@ REST API for course publishing and participant registrations.
 
 ## Prerequisites
 - .NET 10 SDK
-- MySQL; setup instructions to be completed
+- EF Core tools (`dotnet tool restore`)
+- MySQL 8 — or use the provided MySQL container (Docker or Podman):
+  ```bash
+  podman run -d --name kursplassen-mysql -e MYSQL_ROOT_PASSWORD=changeme -e MYSQL_DATABASE=kursplassen -p 3306:3306 docker.io/library/mysql:8
+  ```
 
 
 ## Project structure
@@ -122,6 +126,8 @@ Kursplassen/                                            # Solution root
 ```bash
 dotnet tool restore
 dotnet restore
+podman run -d --name kursplassen-mysql -e MYSQL_ROOT_PASSWORD=changeme -e MYSQL_DATABASE=kursplassen -p 3306:3306 docker.io/library/mysql:8
+dotnet ef database update --project src/Kursplassen.Infrastructure --startup-project src/Kursplassen.Api
 dotnet run --project src/Kursplassen.Api
 ```
 
@@ -132,10 +138,13 @@ dotnet test Kursplassen.sln
 
 ## Database
 Code-first with EF Core migrations.
-Database configuration and migration instructions to be completed.
+Start the MySQL database (container or local instance), then apply migrations:
+```bash
+dotnet ef database update --project src/Kursplassen.Infrastructure --startup-project src/Kursplassen.Api
+```
 
 ## AI usage
 See KI-refleksjon.md.
 
 ## Status
-Initial scaffold only. Business functionality is not yet implemented.
+In progress. Initial scaffold is running (health check, Swagger/Scalar, auth service, EF Core + MySQL with applied migration, auth endpoints). Business functionality is still under development.

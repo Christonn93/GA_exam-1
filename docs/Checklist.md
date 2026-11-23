@@ -104,12 +104,12 @@ Sjekklisten organiserer eksamenskravene i arbeidsrekkefølge, fra planlegging ti
 
 - [ ] Implementer `POST /api/auth/register`.
 - [ ] Tillat registrering uten autentisering.
-- [ ] Sett rollen til `Participant` på serversiden.
+- [x] Sett rollen til `Participant` på serversiden.
 - [ ] Sørg for at klienten ikke kan velge `Instructor` gjennom registreringsforespørselen.
 - [ ] Valider registreringsdata.
-- [ ] Hash passord med egnet passordhashing.
-- [ ] Kontroller at passord aldri lagres i klartekst.
-- [ ] Returner en response-DTO uten passord eller passordhash.
+- [x] Hash passord med egnet passordhashing.
+- [x] Kontroller at passord aldri lagres i klartekst.
+- [x] Returner en response-DTO uten passord eller passordhash.
 
 ### Innlogging og JWT
 

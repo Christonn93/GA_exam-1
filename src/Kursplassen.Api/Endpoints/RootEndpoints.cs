@@ -200,6 +200,14 @@ public static class RootEndpoints
                             </span>
                             <span class="arrow" aria-hidden="true">&rarr;</span>
                         </a>
+                        
+                        <a class="link" href="/scalar/v1">
+                          <span>
+                              <span class="link-title">Scalar</span><br />
+                              <span class="link-description">Using scalar for api interactiosn</span>
+                          </span>
+                          <span class="arrow" aria-hidden="true">&rarr;</span>
+                      </a>
 
                         <a class="link" href="/health">
                             <span>

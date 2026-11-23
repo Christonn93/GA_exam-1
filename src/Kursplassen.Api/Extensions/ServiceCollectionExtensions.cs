@@ -1,5 +1,7 @@
+using Kursplassen.Api.Authentication;
 using Kursplassen.Api.Endpoints;
 using Kursplassen.Core.Interfaces;
+using Kursplassen.Core.Services;
 using Kursplassen.Infrastructure.Data;
 using Kursplassen.Infrastructure.Repositories;
 
@@ -26,10 +28,23 @@ public static class ServiceCollectionExtensions
                 configuration.GetConnectionString("Kursplassen"),
                 new MySqlServerVersion(new Version(8, 0))));
 
+        // Register application/domain services
+        services.AddScoped<IAuthService, AuthService>();
+
         // Register data-access repositories
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ICourseRepository, CourseRepository>();
         services.AddScoped<IRegistrationRepository, RegistrationRepository>();
+
+        // Register authentication infrastructure
+        services.AddScoped<IJwtTokenService, JwtTokenService>();
+        services.AddScoped<IPassHashService, PassHashService>();
+
+        // Register OpenAPI document generation (served in development)
+        services.AddOpenApi();
+
+        // Bind JwtOptions from configuration section "JWT"
+        services.Configure<JwtOptions>(configuration.GetSection("JWT"));
 
         return services;
     }
