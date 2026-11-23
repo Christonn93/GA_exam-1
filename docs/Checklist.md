@@ -7,7 +7,7 @@ Sjekklisten organiserer eksamenskravene i arbeidsrekkefølge, fra planlegging ti
 - [x] Les hele oppgaveteksten, inkludert ER-diagrammet og vurderingskriteriene.
 - [ ] Lag en oversikt over obligatoriske endepunkter.
 - [x] Velg controllere eller Minimal API.
-- [ ] Velg database-first eller code-first med Entity Framework Core.
+- [x] Velg database-first eller code-first med Entity Framework Core.
 - [x] Planlegg tydelig lagdeling med API-lag, tjenestelag og datatilgang.
 - [ ] Planlegg separate request- og response-DTO-er.
 - [ ] Avklar hvordan instruktørkontoer skal gjøres tilgjengelige i testdata; offentlig registrering skal bare opprette `Participant`.
@@ -20,11 +20,11 @@ Sjekklisten organiserer eksamenskravene i arbeidsrekkefølge, fra planlegging ti
 
 ## 2. Opprett løsning og grunnstruktur
 
-- [ ] Opprett ASP.NET Core Web API-prosjekt.
-- [ ] Opprett testprosjekt med xUnit.
-- [ ] Legg prosjektene til i samme .NET-løsning.
+- [x] Opprett ASP.NET Core Web API-prosjekt.
+- [x] Opprett testprosjekt med xUnit.
+- [x] Legg prosjektene til i samme .NET-løsning.
 - [ ] Opprett struktur for:
-    - [ ] Endepunkter eller controllere.
+    - [x] Endepunkter eller controllere.
     - [ ] Request- og response-DTO-er.
     - [ ] Tjenester og forretningslogikk.
     - [ ] Entiteter og databasekonfigurasjon.
@@ -33,52 +33,52 @@ Sjekklisten organiserer eksamenskravene i arbeidsrekkefølge, fra planlegging ti
 - [ ] Konfigurer dependency injection.
 - [ ] Sett opp konfigurasjon for MySQL og JWT.
 - [ ] Forslag: Hold faktiske hemmeligheter utenfor filer som skal leveres.
-- [ ] Kontroller at løsningen bygger og API-et starter.
+- [x] Kontroller at løsningen bygger og API-et starter.
 
 ## 3. Implementer datamodell og database
 
 ### Brukere — `users`
 
-- [ ] Opprett feltene fra ER-diagrammet:
-    - [ ] `id`
-    - [ ] `email`
-    - [ ] `password_hash`
-    - [ ] `display_name`
-    - [ ] `role`
-    - [ ] `created_at_utc`
-- [ ] Støtt konto-rollene `Participant` og `Instructor`.
+- [x] Opprett feltene fra ER-diagrammet:
+    - [x] `id`
+    - [x] `email`
+    - [x] `password_hash`
+    - [x] `display_name`
+    - [x] `role`
+    - [x] `created_at_utc`
+- [x] Støtt konto-rollene `Participant` og `Instructor`.
 
 ### Kurs — `courses`
 
-- [ ] Opprett feltene fra ER-diagrammet:
-    - [ ] `id`
-    - [ ] `owner_user_id`
-    - [ ] `title`
-    - [ ] `description`
-    - [ ] `starts_at_utc`
-    - [ ] `ends_at_utc`
-    - [ ] `location`
-    - [ ] `capacity`
-    - [ ] `status`
-    - [ ] `created_at_utc`
-    - [ ] `updated_at_utc`
-- [ ] Støtt kursstatusene `Draft`, `Published` og `Cancelled`.
+- [x] Opprett feltene fra ER-diagrammet:
+    - [x] `id`
+    - [x] `owner_user_id`
+    - [x] `title`
+    - [x] `description`
+    - [x] `starts_at_utc`
+    - [x] `ends_at_utc`
+    - [x] `location`
+    - [x] `capacity`
+    - [x] `status`
+    - [x] `created_at_utc`
+    - [x] `updated_at_utc`
+- [x] Støtt kursstatusene `Draft`, `Published` og `Cancelled`.
 
 ### Påmeldinger — `registrations`
 
-- [ ] Opprett feltene fra ER-diagrammet:
-    - [ ] `id`
-    - [ ] `course_id`
-    - [ ] `participant_user_id`
-    - [ ] `registered_at_utc`
-    - [ ] `cancelled_at_utc`
-    - [ ] `active_participant_user_id`
+- [x] Opprett feltene fra ER-diagrammet:
+    - [x] `id`
+    - [x] `course_id`
+    - [x] `participant_user_id`
+    - [x] `registered_at_utc`
+    - [x] `cancelled_at_utc`
+    - [x] `active_participant_user_id`
 
 ### Relasjoner og integritet
 
-- [ ] Knytt hvert kurs til én eier.
-- [ ] Knytt hver påmelding til ett kurs.
-- [ ] Knytt hver påmelding til én deltaker.
+- [x] Knytt hvert kurs til én eier.
+- [x] Knytt hver påmelding til ett kurs.
+- [x] Knytt hver påmelding til én deltaker.
 - [ ] Konfigurer datatyper, feltlengder og nullable-felter i samsvar med diagrammet.
 - [ ] Implementer en løsning som hindrer flere aktive påmeldinger for samme deltaker på samme kurs.
 - [ ] Planlegg hvordan samtidige påmeldinger skal håndteres uten oversalg.
@@ -193,13 +193,13 @@ Sjekklisten organiserer eksamenskravene i arbeidsrekkefølge, fra planlegging ti
 
 ## 9. Implementer logging, health check og rate limiting
 
-- [ ] Implementer strukturert logging.
+- [x] Implementer strukturert logging.
 - [ ] Kontroller at logger ikke inneholder:
     - [ ] Passord.
     - [ ] Passordhash.
     - [ ] JWT-er.
     - [ ] Andre hemmeligheter.
-- [ ] Implementer offentlig `GET /health`.
+- [x] Implementer offentlig `GET /health`.
 - [ ] Implementer rate limiting på registrering eller innlogging.
 - [ ] Skriv en kort begrunnelse for valget av rate limiting.
 - [ ] Kontroller at rate limiting faktisk aktiveres ved gjentatte forespørsler.
