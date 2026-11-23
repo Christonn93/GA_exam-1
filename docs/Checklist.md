@@ -5,7 +5,7 @@ Sjekklisten organiserer eksamenskravene i arbeidsrekkefølge, fra planlegging ti
 ## 1. Avklar krav og planlegg løsningen
 
 - [x] Les hele oppgaveteksten, inkludert ER-diagrammet og vurderingskriteriene.
-- [ ] Lag en oversikt over obligatoriske endepunkter.
+- [x] Lag en oversikt over obligatoriske endepunkter.
 - [x] Velg controllere eller Minimal API.
 - [x] Velg database-first eller code-first med Entity Framework Core.
 - [x] Planlegg tydelig lagdeling med API-lag, tjenestelag og datatilgang.

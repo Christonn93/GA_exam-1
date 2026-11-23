@@ -13,6 +13,11 @@ public static class AuthEndpoints
         group.MapGet("/register", () => Results.Redirect("/auth"));
         group.MapGet("/login", () => Results.Redirect("/auth"));
         group.MapGet("/logout", () => Results.Redirect("/auth"));
+        
+        // JWT Token endpoints
+        // (POST handlers live elsewhere or are added later)
+        group.MapGet("/token", () => Results.Redirect("/auth"));
+        group.MapGet("/refresh", () => Results.Redirect("/auth"));
 
         return app;
     }

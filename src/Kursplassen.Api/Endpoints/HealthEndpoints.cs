@@ -12,8 +12,9 @@ public static class HealthEndpoints
         // Simple liveness probe returning static status
         group.MapGet("/", () => Results.Ok(new
             {
-                status = "Healthy",
-                message = "Kursplassen API is running"
+                message = "Kursplassen API is running",
+                version = "v1",
+                status = "Healthy!"
             }))
             .WithName("GetHealth")
             .WithSummary("Check whether the API is running");
