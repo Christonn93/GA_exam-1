@@ -24,6 +24,7 @@ app.UseApiPipeline();
 
 // Map endpoints
 app.MapHealthEndpoints();
+app.MapRootEndpoints();
 app.MapAuthEndpoints();
 
 // Map controllers
