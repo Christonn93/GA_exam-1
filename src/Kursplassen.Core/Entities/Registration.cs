@@ -4,11 +4,13 @@ namespace Kursplassen.Core.Entities;
 
 public class Registration
 {
-    public int Id { get; set; }
-    public int UserId { get; set; }
-    public User User { get; set; } = default!;
-    public int CourseId { get; set; }
+    public Guid Id { get; set; }
+    public Guid CourseId { get; set; }
     public Course Course { get; set; } = default!;
+    public Guid ParticipantUserId { get; set; }
+    public User Participant { get; set; } = default!;
     public RegistrationStatus Status { get; set; }        // Active | Cancelled
-    public DateTime CreatedAtUtc { get; set; }
+    public DateTime RegisteredAtUtc { get; set; }
+    public DateTime? CancelledAtUtc { get; set; }
+    public Guid? ActiveParticipantUserId { get; set; }
 }
