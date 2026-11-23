@@ -1,0 +1,6 @@
+# Replace the address with the URL printed by dotnet run.
+@baseUrl = http://localhost:5000
+
+### Course catalogue — implement this endpoint first
+GET {{baseUrl}}/api/courses
+Accept: application/json
