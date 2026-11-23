@@ -1,6 +1,6 @@
 using Kursplassen.Core.Enums;
 
-namespace Kursplassen.Api.Models;
+namespace Kursplassen.Core.Entities;
 
 public class Registration
 {
