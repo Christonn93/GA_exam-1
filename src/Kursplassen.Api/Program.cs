@@ -1,26 +1,26 @@
+using Kursplassen.Api.Endpoints;
+using Kursplassen.Api.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+// Register application and API-level services
+builder.Services
+    .AddApplicationServices()
+    .AddApiServices();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
+// Configure the HTTP pipeline (OpenAPI in dev, logging, authorization)
+app.UseApiPipeline();
 
-app.UseHttpsRedirection();
+// Map endpoints
+app.MapHealthEndpoints();
+app.MapAuthEndpoints();
 
-app.UseAuthorization();
-
+// Map controllers
 app.MapControllers();
 
 app.Run();
 
-// Exposes the entry point to the integration test project.
+// Exposes Program to the test project via WebApplicationFactory<Program>
 public partial class Program { }
