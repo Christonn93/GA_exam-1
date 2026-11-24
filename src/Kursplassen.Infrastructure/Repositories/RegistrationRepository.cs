@@ -1,4 +1,5 @@
 using Kursplassen.Core.Entities;
+using Kursplassen.Core.Enums;
 using Kursplassen.Core.Interfaces;
 using Kursplassen.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -47,4 +48,11 @@ public class RegistrationRepository : IRegistrationRepository
         await _context.SaveChangesAsync();
         return registration;
     }
+
+    // Count active (non-cancelled) registrations for a course
+    public async Task<int> GetActiveCountAsync(Guid courseId)
+        => await _context.Registrations
+            .CountAsync(registration =>
+                registration.CourseId == courseId &&
+                registration.Status == RegistrationStatus.Active);
 }

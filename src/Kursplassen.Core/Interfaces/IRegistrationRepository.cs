@@ -15,4 +15,7 @@ public interface IRegistrationRepository
 
     // Persist changes to an existing registration (null if not found)
     Task<Registration?> UpdateAsync(Registration registration);
+
+    // Count active (non-cancelled) registrations for a course
+    Task<int> GetActiveCountAsync(Guid courseId);
 }
