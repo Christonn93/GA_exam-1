@@ -59,6 +59,16 @@ public static class CoursesEndpoints
             return Results.NoContent();
         }).RequireAuthorization(policy => policy.RequireRole("Instructor"));
 
+        // POST /api/courses/{courseId}/registrations - participant registers for the course
+        group.MapPost("/{courseId:guid}/registrations", async (
+            Guid courseId,
+            ICurrentUserService currentUser,
+            IRegistrationService registrationService) =>
+        {
+            var response = await registrationService.RegisterAsync(courseId, currentUser.UserId);
+            return Results.Created($"/api/courses/{courseId}/registrations/{response.Id}", response);
+        }).RequireAuthorization(policy => policy.RequireRole("Participant"));
+
         return app;
     }
 }

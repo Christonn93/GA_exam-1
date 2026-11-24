@@ -18,4 +18,7 @@ public interface IRegistrationRepository
 
     // Count active (non-cancelled) registrations for a course
     Task<int> GetActiveCountAsync(Guid courseId);
+
+    // Find the active registration for a given course and participant (null if none)
+    Task<Registration?> GetActiveByCourseAndParticipantAsync(Guid courseId, Guid participantUserId);
 }

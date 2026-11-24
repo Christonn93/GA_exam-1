@@ -34,6 +34,7 @@ public static class ServiceCollectionExtensions
         // Register application/domain services
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<ICourseService, CourseService>();
+        services.AddScoped<IRegistrationService, RegistrationService>();
 
         // Register data-access repositories
         services.AddScoped<IUserRepository, UserRepository>();

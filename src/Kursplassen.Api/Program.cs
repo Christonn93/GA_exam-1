@@ -43,6 +43,7 @@ app.MapHealthEndpoints();
 app.MapRootEndpoints();
 app.MapAuthEndpoints();
 app.MapCoursesEndpoints();
+app.MapRegistrationsEndpoints();
 
 // Map controllers
 app.MapControllers();

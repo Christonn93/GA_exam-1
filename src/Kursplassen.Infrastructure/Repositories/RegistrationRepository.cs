@@ -55,4 +55,12 @@ public class RegistrationRepository : IRegistrationRepository
             .CountAsync(registration =>
                 registration.CourseId == courseId &&
                 registration.Status == RegistrationStatus.Active);
+
+    // Find the active registration for a given course and participant (null if none)
+    public async Task<Registration?> GetActiveByCourseAndParticipantAsync(Guid courseId, Guid participantUserId)
+        => await _context.Registrations
+            .FirstOrDefaultAsync(registration =>
+                registration.CourseId == courseId &&
+                registration.ParticipantUserId == participantUserId &&
+                registration.Status == RegistrationStatus.Active);
 }

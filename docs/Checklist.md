@@ -163,33 +163,33 @@ Sjekklisten organiserer eksamenskravene i arbeidsrekkefølge, fra planlegging ti
 
 ### Påmelding
 
-- [ ] Implementer `POST /api/courses/{courseId}/registrations`.
-- [ ] Begrens endepunktet til `Participant`.
-- [ ] Hent deltakerens identitet fra autentisert kontekst.
-- [ ] Tillat bare påmelding når:
-    - [ ] Kurset finnes.
-    - [ ] Kurset er publisert.
-    - [ ] Kurset ikke har startet.
-    - [ ] Det finnes ledig kapasitet.
-    - [ ] Deltakeren ikke allerede har en aktiv påmelding.
+- [x] Implementer `POST /api/courses/{courseId}/registrations`.
+- [x] Begrens endepunktet til `Participant`.
+- [x] Hent deltakerens identitet fra autentisert kontekst.
+- [x] Tillat bare påmelding når:
+    - [x] Kurset finnes.
+    - [x] Kurset er publisert.
+    - [x] Kurset ikke har startet.
+    - [x] Det finnes ledig kapasitet.
+    - [x] Deltakeren ikke allerede har en aktiv påmelding.
 - [ ] Returner forståelige feil med egnet status ved avvisning.
 - [ ] Sikre at samtidige forespørsler ikke overselger kurset.
 - [ ] Sikre at samtidige forespørsler fra samme deltaker ikke oppretter to aktive påmeldinger.
 
 ### Egne påmeldinger
 
-- [ ] Implementer `GET /api/registrations/mine`.
-- [ ] Begrens endepunktet til `Participant`.
-- [ ] Returner bare innlogget deltakers egne påmeldinger.
-- [ ] Inkluder relevant kursinformasjon.
+- [x] Implementer `GET /api/registrations/mine`.
+- [x] Begrens endepunktet til `Participant`.
+- [x] Returner bare innlogget deltakers egne påmeldinger.
+- [x] Inkluder relevant kursinformasjon.
 
 ### Avbestilling
 
-- [ ] Implementer `DELETE /api/registrations/{registrationId}`.
-- [ ] Tillat bare deltakeren som eier påmeldingen å avbestille.
-- [ ] Sørg for at avbestilling frigjør plassen.
-- [ ] Sørg for at deltakeren kan melde seg på igjen etter avbestilling.
-- [ ] Sørg for at `RegistrationOwner` er en eierskapskontroll, ikke en egen konto- eller JWT-rolle.
+- [x] Implementer `DELETE /api/registrations/{registrationId}`.
+- [x] Tillat bare deltakeren som eier påmeldingen å avbestille.
+- [x] Sørg for at avbestilling frigjør plassen.
+- [x] Sørg for at deltakeren kan melde seg på igjen etter avbestilling.
+- [x] Sørg for at `RegistrationOwner` er en eierskapskontroll, ikke en egen konto- eller JWT-rolle.
 
 ## 9. Implementer logging, health check og rate limiting
 
