@@ -42,6 +42,10 @@ public static class ServiceCollectionExtensions
         // Register authentication infrastructure
         services.AddScoped<IJwtTokenService, JwtTokenService>();
         services.AddScoped<IPassHashService, PassHashService>();
+        services.AddScoped<ICurrentUserService, CurrentUserService>();
+
+        // Required by CurrentUserService to read the authenticated principal
+        services.AddHttpContextAccessor();
 
         // Register OpenAPI document generation (served in development)
         services.AddOpenApi();
