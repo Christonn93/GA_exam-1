@@ -8,30 +8,11 @@ using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Register application and API-level services
+// Register application, API, and authentication services in order
 builder.Services
-    .AddApplicationServices(builder.Configuration)
-    .AddApiServices()
-    
-    // Resource: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/?view=aspnetcore-11.0
-    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
-    {
-        var jwtOptions = builder.Configuration.GetSection("JWT").Get<JwtOptions>() ?? new JwtOptions();
-
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = jwtOptions.ValidIssuer,
-            ValidAudience = jwtOptions.ValidAudience,
-            IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(jwtOptions.SecretKey))
-        };
-    })
-    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options => builder.Configuration.Bind("CookieSettings", options))
-;
+    .AddApplicationServices(builder.Configuration)   // domain services + DbContext
+    .AddApiServices()                                 // controllers + OpenAPI
+    .AddApiAuthentication(builder.Configuration);    // JWT + cookie auth
 
 var app = builder.Build();
 
