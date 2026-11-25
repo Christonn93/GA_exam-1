@@ -8,6 +8,9 @@ using Kursplassen.Infrastructure.Data;
 using Kursplassen.Infrastructure.Repositories;
 
 using FluentValidation;
+
+using Kursplassen.Api.Middleware;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Pomelo.EntityFrameworkCore.MySql;
@@ -73,6 +76,9 @@ public static class ServiceCollectionExtensions
         // Register the endpoint validation filter
         services.AddTransient<ValidationFilter>();
 
+        // Register rate limiting.
+        services.AddRateLimiter(RateLimitingConfiguration.Configure);
+        
         return services;
     }
 }

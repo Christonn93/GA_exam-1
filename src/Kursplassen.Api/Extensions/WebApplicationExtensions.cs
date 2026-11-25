@@ -8,22 +8,19 @@ public static class WebApplicationExtensions
     public static WebApplication UseApiPipeline(
         this WebApplication app)
     {
-        // Log every request first — outermost in the app pipeline, so it always
-        // records the final status code (including after exception handling).
+        // Log requests, including errors and rate-limit rejections.
         app.UseMiddleware<RequestLoggingMiddleware>();
 
-        // Convert unhandled exceptions to ProblemDetails. Placed inside the
-        // request logger so the logger observes the rewritten status code.
+        // Convert unhandled exceptions into ProblemDetails responses.
         app.UseMiddleware<ExceptionHandlingMiddleware>();
 
-        // Expose the OpenAPI document and both documentation UIs
-        // only during development.
+        // Expose API documentation only during development.
         if (app.Environment.IsDevelopment())
         {
-            // Serve the generated OpenAPI JSON document
+            // OpenAPI JSON document.
             app.MapOpenApi();
 
-            // Swagger UI at /swagger, pointing at the OpenAPI document
+            // Swagger UI at /swagger.
             app.UseSwaggerUI(options =>
             {
                 options.SwaggerEndpoint(
@@ -33,11 +30,20 @@ public static class WebApplicationExtensions
                 options.RoutePrefix = "swagger";
             });
 
-            // Alternative modern API reference UI (Scalar)
+            // Scalar UI at /scalar.
             app.MapScalarApiReference();
         }
 
-        // Enforce authorization for downstream endpoints.
+        // Resolve the endpoint and its metadata.
+        app.UseRouting();
+
+        // Populate HttpContext.User before applying per-user limits.
+        app.UseAuthentication();
+
+        // Apply the rate limiter registered in AddApiServices().
+        app.UseRateLimiter();
+
+        // Enforce authorization for the selected endpoint.
         app.UseAuthorization();
 
         return app;
