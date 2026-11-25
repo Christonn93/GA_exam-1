@@ -30,10 +30,6 @@ Kursplassen/                                            # Solution root
 │
 ├── src/                                                # Production code
 │   ├── Kursplassen.Api/                                # Presentation layer (HTTP surface)
-│   │   ├── Controllers/                                # API controllers
-│   │   │   ├── AuthController.cs                       # Register / login endpoints
-│   │   │   ├── CoursesController.cs                    # Course CRUD endpoints
-│   │   │   └── RegistrationsController.cs              # Course registration endpoints
 │   │   ├── Middleware/
 │   │   │   └── ExceptionHandlingMiddleware.cs          # Maps exceptions to ProblemDetails
 │   │   ├── Authentication/

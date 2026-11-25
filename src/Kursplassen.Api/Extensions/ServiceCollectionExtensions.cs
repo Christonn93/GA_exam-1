@@ -1,5 +1,6 @@
 using Kursplassen.Api.Authentication;
 using Kursplassen.Api.Endpoints;
+using Kursplassen.Api.Middleware;
 using Kursplassen.Api.Validation;
 using Kursplassen.Core.Interfaces;
 using Kursplassen.Core.Services;
@@ -8,8 +9,6 @@ using Kursplassen.Infrastructure.Data;
 using Kursplassen.Infrastructure.Repositories;
 
 using FluentValidation;
-
-using Kursplassen.Api.Middleware;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
