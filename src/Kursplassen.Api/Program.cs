@@ -8,6 +8,13 @@ using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Keep the console output focused: suppress verbose EF Core SQL-command
+// logging while keeping application-level (middleware/service) logs.
+builder.Services.AddLogging(logging =>
+{
+    logging.AddFilter("Microsoft.EntityFrameworkCore", LogLevel.Warning);
+});
+
 // Register application, API, and authentication services in order
 builder.Services
     .AddApplicationServices(builder.Configuration)   // domain services + DbContext
@@ -25,6 +32,8 @@ app.MapRootEndpoints();
 app.MapAuthEndpoints();
 app.MapCoursesEndpoints();
 app.MapRegistrationsEndpoints();
+app.MapUserEndpoints();
+app.MapAuditEndpoints();
 
 // Map controllers
 app.MapControllers();

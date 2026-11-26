@@ -11,7 +11,7 @@ REST API for course publishing and participant registration, with authentication
 - [Getting started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [1. Restore tools and dependencies](#1-restore-tools-and-dependencies)
-  - [2. Start MySQL](#2-start-mysql)
+  - [2. Start SQLite](#2-start-sqlite)
   - [3. Check database configuration](#3-check-database-configuration)
   - [4. Apply database migrations](#4-apply-database-migrations)
   - [5. Run the API](#5-run-the-api)
@@ -29,15 +29,15 @@ Implemented so far:
 - **HTTP surface (Minimal API)**: health check, root landing page, auth endpoints (`/api/auth/register`, `/api/auth/login`, `/api/auth/token`, `/api/auth/token/refresh`), course endpoints (`GET`/`POST /api/courses`, `GET`/`PUT`/`DELETE /api/courses/{courseId}`), registration endpoints (`POST /api/courses/{courseId}/registrations`, `GET /api/registrations/mine`, `DELETE /api/registrations/{registrationId}`).
 - **Cross-cutting concerns**: structured request logging, global exception handling (RFC 7807 `ProblemDetails`), rate limiting (fixed window, 100 req/min per partition, `429` on rejection), dev-only Swagger UI + Scalar, health check.
 - **Domain**: entities, DTOs, services and exceptions aligned with the assignment ER diagram; auth (BCrypt hashing, JWT), course and registration business logic.
-- **Data**: EF Core + Pomelo MySQL, code-first, migration applied.
+- **Data**: EF Core + SQLite, code-first, migration applied.
 
 Still pending: automated tests, demo data seeding, final documentation, video, submission packaging.
 
 ## Technology stack
 
 - ASP.NET Core 10 (Minimal API)
-- Entity Framework Core 9 + Pomelo.EntityFrameworkCore.MySql (MySQL 8)
-- MySQL 8
+- Entity Framework Core 10 + Microsoft.EntityFrameworkCore.Sqlite (SQLite)
+- SQLite 3
 - xUnit, Moq, WebApplicationFactory (integration tests); SQLite for isolated integration tests
 - FluentValidation
 - ASP.NET Core rate limiting (built-in)
@@ -52,7 +52,7 @@ The solution follows a layered structure:
 - **`Kursplassen.Core`** – domain layer: entities, enums, DTOs, services, interfaces, domain exceptions (no infrastructure dependencies).
 - **`Kursplassen.Infrastructure`** – data layer: EF Core `DbContext`, configurations, repositories.
 
-Request flow: Minimal API endpoint → service (business rules) → repository (EF Core) → MySQL.
+Request flow: Minimal API endpoint → service (business rules) → repository (EF Core) → SQLite.
 
 ## Project structure
 
@@ -113,11 +113,7 @@ Kursplassen/                                            # Solution root
 
 - .NET 10 SDK
 - EF Core tools (`dotnet tool restore`)
-- MySQL 8 — or use the provided MySQL container (Docker or Podman):
-
-  ```bash
-  podman run -d --name kursplassen-mysql -e MYSQL_ROOT_PASSWORD=changeme -e MYSQL_DATABASE=kursplassen -p 3306:3306 docker.io/library/mysql:8
-  ```
+- SQLite 3 — file-based database (`app.db`), no server required.
 
 ### 1. Restore tools and dependencies
 
@@ -126,13 +122,13 @@ dotnet tool restore
 dotnet restore
 ```
 
-### 2. Start MySQL
+### 2. Start SQLite
 
-Start the MySQL container (or local instance) and wait until it accepts connections.
+The API uses a local SQLite database file (`app.db`). No server or container is needed.
 
 ### 3. Check database configuration
 
-Confirm the connection string `ConnectionStrings:Kursplassen` points to the running database (default `Server=localhost;Database=kursplassen;...`).
+Confirm the connection string `ConnectionStrings:Kursplassen` points to the SQLite file (default `Data Source=app.db`).
 
 ### 4. Apply database migrations
 
@@ -161,9 +157,9 @@ dotnet test Kursplassen.sln
 
 ## Database
 
-Code-first with EF Core migrations (Pomelo MySQL provider, MySQL 8).
+Code-first with EF Core migrations (Microsoft.EntityFrameworkCore.Sqlite provider, SQLite 3).
 
-1. Start MySQL (container or local instance).
+1. Ensure the SQLite database file is created (via migration below).
 2. Apply migrations:
 
    ```bash

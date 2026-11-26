@@ -4,6 +4,7 @@ using Kursplassen.Api.Authentication;
 
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Kursplassen.Api.Extensions;
@@ -51,6 +52,25 @@ public static class AuthenticationServiceExtensions
                             IssuerSigningKey = new SymmetricSecurityKey(
                                 Encoding.UTF8.GetBytes(jwtOptions.SecretKey))
                         };
+
+                    // Return a JSON ProblemDetails body (instead of an empty 401) when challenged
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnChallenge = (challengeContext) =>
+                        {
+                            challengeContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                            challengeContext.Response.ContentType = "application/json";
+
+                            return challengeContext.Response.WriteAsJsonAsync(
+                                new ProblemDetails
+                                {
+                                    Type = "https://tools.ietf.org/spec/v3.1#authentication_failed",
+                                    Title = "Unauthorized",
+                                    Status = StatusCodes.Status401Unauthorized,
+                                    Detail = "Authentication is required to access this resource."
+                                });
+                        }
+                    };
                 })
             // Cookie scheme for browser-based auth, configured from CookieSettings
             .AddCookie(

@@ -12,7 +12,6 @@ using FluentValidation;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Pomelo.EntityFrameworkCore.MySql;
 
 namespace Kursplassen.Api.Extensions;
 
@@ -26,12 +25,9 @@ public static class ServiceCollectionExtensions
         // Example:
         // services.AddScoped<ICourseService, CourseService>();
 
-        // Register the EF Core DbContext backed by MySQL
-        // (MySqlServerVersion pins the provider behavior to MySQL 8.0)
+        // Register the EF Core DbContext backed by SQLite
         services.AddDbContext<KursplassenDbContext>(options =>
-            options.UseMySql(
-                configuration.GetConnectionString("Kursplassen"),
-                new MySqlServerVersion(new Version(8, 0))));
+            options.UseSqlite(configuration.GetConnectionString("Kursplassen")));
 
         // Register application/domain services
         services.AddScoped<IAuthService, AuthService>();
@@ -42,6 +38,15 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ICourseRepository, CourseRepository>();
         services.AddScoped<IRegistrationRepository, RegistrationRepository>();
+
+        // Register audit log repository
+        services.AddScoped<IAuditLogRepository, AuditLogRepository>();
+
+        // Register user service
+        services.AddScoped<IUserService, UserService>();
+
+        // Register audit service
+        services.AddScoped<IAuditService, AuditService>();
 
         // Register authentication infrastructure
         services.AddScoped<IJwtTokenService, JwtTokenService>();

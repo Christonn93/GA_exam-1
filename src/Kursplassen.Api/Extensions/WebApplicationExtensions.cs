@@ -11,9 +11,6 @@ public static class WebApplicationExtensions
         // Log requests, including errors and rate-limit rejections.
         app.UseMiddleware<RequestLoggingMiddleware>();
 
-        // Convert unhandled exceptions into ProblemDetails responses.
-        app.UseMiddleware<ExceptionHandlingMiddleware>();
-
         // Expose API documentation only during development.
         if (app.Environment.IsDevelopment())
         {
@@ -30,8 +27,14 @@ public static class WebApplicationExtensions
                 options.RoutePrefix = "swagger";
             });
 
-            // Scalar UI at /scalar.
-            app.MapScalarApiReference();
+            // Scalar UI at /scalar, with HTTP bearer auth enabled so the JWT
+            // obtained from POST /api/auth/login can be supplied and persisted
+            // across requests in the Scalar UI.
+            app.MapScalarApiReference(options =>
+            {
+                options.Title = "Kursplassen API";
+                options.EnablePersistentAuthentication();
+            });
         }
 
         // Resolve the endpoint and its metadata.
@@ -45,6 +48,11 @@ public static class WebApplicationExtensions
 
         // Enforce authorization for the selected endpoint.
         app.UseAuthorization();
+
+        // Convert unhandled exceptions into ProblemDetails responses.
+        // (registered after auth/routing so authentication failures such as
+        // JWT challenges are handled with a clean ProblemDetails response)
+        app.UseMiddleware<ExceptionHandlingMiddleware>();
 
         return app;
     }
